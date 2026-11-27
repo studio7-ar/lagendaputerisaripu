@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Scene 1 | Puteri Saripu AR</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      background: #18263a;
+    }
+
+    header h1 {
+      font-size: 24px;
+      color: #f5d58b;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    #ar-container {
+      width: 100%;
+      height: 65vh;
+      min-height: 350px;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #ar-container video,
+    #ar-container canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .instructions {
+      padding: 24px 16px;
+    }
+
+    .instructions h2 {
+      color: #f5d58b;
+      margin-bottom: 12px;
+    }
+
+    .instructions p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    button {
+      margin: 10px 5px;
+      padding: 13px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #start-button {
+      background: #f5d58b;
+      color: #18263a;
+    }
+
+    #stop-button {
+      background: #e87979;
+      color: white;
+      display: none;
+    }
+
+    #status {
+      margin: 15px auto;
+      max-width: 500px;
+      font-size: 14px;
+      color: #f5d58b;
+      overflow-wrap: anywhere;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #f5d58b;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>PUTERI SARIPU</h1>
+    <p>Augmented Reality Experience</p>
+  </header>
+
+  <main>
+
+    <div id="ar-container"></div>
+
+    <div class="instructions">
+
+      <h2>Scene 1: The Beginning</h2>
+
+      <p>
+        Point your camera towards the Scene 1 AR marker
+        to reveal the 3D scene.
+      </p>
+
+      <p id="status" role="status" aria-live="polite">
+        Ready to start your AR experience.
+      </p>
+
+      <button id="start-button">
+        Start AR
+      </button>
+
+      <button id="stop-button">
+        Stop AR
+      </button>
+
+      <p>
+        <a class="back-link" href="index.html">
+          Back to Homepage
+        </a>
+      </p>
+
+    </div>
+
+  </main>
+
+  <!-- MindAR library -->
+  <script src="./libs/mindar/mindar-image-three.prod.js"></script>
+
+  <!-- AR script -->
+  <script type="module" src="js/ar.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Scene Viewer | The Legend of Puteri Saripu</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
+  <style>
+    :root { --viewer-ink:#263b32; --viewer-green:#416b54; --viewer-cream:#f6f3e9; --viewer-line:#d9dfd4; }
+    body.viewer-page { background:var(--viewer-cream); color:var(--viewer-ink); min-height:100vh; }
+    .viewer-top { max-width:1180px; margin:auto; padding:22px 5%; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .viewer-brand { color:var(--viewer-ink); text-decoration:none; font-weight:700; letter-spacing:.04em; }
+    .viewer-back { display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--viewer-green); font-weight:700; border:1px solid var(--viewer-line); background:#fff; border-radius:999px; padding:10px 16px; }
+    .viewer-main { max-width:1180px; margin:0 auto; padding:20px 5% 60px; }
+    .viewer-heading { text-align:center; margin:10px auto 28px; }
+    .viewer-eyebrow { letter-spacing:.16em; text-transform:uppercase; font-size:.75rem; font-weight:700; color:var(--viewer-green); }
+    .viewer-heading h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.4rem); margin:10px 0; }
+    .viewer-heading p { color:#64756b; margin:0; }
+    .viewer-layout { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr); gap:22px; align-items:stretch; }
+    .model-card,.scene-panel { background:#fff; border:1px solid var(--viewer-line); border-radius:24px; overflow:hidden; box-shadow:0 12px 35px rgba(36,59,47,.06); }
+    .model-stage { position:relative; min-height:460px; background:radial-gradient(ellipse at center,#fefefe 0%,#eef2eb 100%); }
+    model-viewer { width:100%; height:460px; background:transparent; --poster-color:transparent; }
+    .model-message { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:26px; pointer-events:none; }
+    .model-message-inner { max-width:390px; background:rgba(255,255,255,.9); border:1px solid var(--viewer-line); border-radius:18px; padding:22px; box-shadow:0 8px 30px rgba(0,0,0,.05); }
+    .model-message-inner h2 { margin:0 0 8px; font-family:'Playfair Display',serif; }
+    .model-message-inner p { margin:0; color:#637168; line-height:1.6; }
+    .model-message.hidden { display:none; }
+    .viewer-controls { display:flex; flex-wrap:wrap; gap:10px; padding:16px; border-top:1px solid var(--viewer-line); }
+    .viewer-control { cursor:pointer; border:1px solid var(--viewer-line); background:#fff; color:var(--viewer-ink); padding:10px 14px; border-radius:999px; font:inherit; font-weight:600; }
+    .viewer-control:hover,.viewer-control.active { background:var(--viewer-green); border-color:var(--viewer-green); color:white; }
+    .scene-panel { padding:24px; display:flex; flex-direction:column; gap:16px; }
+    .scene-number { display:inline-block; background:#edf3e9; color:var(--viewer-green); border-radius:999px; padding:7px 12px; font-weight:700; font-size:.78rem; width:max-content; }
+    .scene-panel h2 { font-family:'Playfair Display',serif; margin:0; font-size:1.6rem; }
+    .scene-panel p { color:#65736a; line-height:1.7; margin:0; }
+    .viewer-language { border:1px solid var(--viewer-line); background:#fbfcfa; border-radius:12px; padding:11px 12px; color:var(--viewer-ink); font:inherit; }
+    .scene-nav { display:flex; gap:10px; margin-top:auto; }
+    .scene-nav a { flex:1; text-align:center; text-decoration:none; border-radius:999px; padding:11px 14px; font-weight:700; border:1px solid var(--viewer-line); color:var(--viewer-green); }
+    .scene-nav a.next { background:var(--viewer-green); color:white; border-color:var(--viewer-green); }
+    .viewer-tip { font-size:.85rem; padding:13px 15px; background:#f4f7f0; border-radius:14px; color:#596b5f; line-height:1.55; }
+    @media(max-width:800px){ .viewer-layout{grid-template-columns:1fr;} .model-stage,model-viewer{min-height:340px;height:340px;} .scene-panel{padding:20px;} }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;}}
+  </style>
+</head>
+<body class="viewer-page">
+  <header class="viewer-top">
+    <a class="viewer-brand" href="index.html">THE LEGEND OF PUTERI SARIPU</a>
+    <a class="viewer-back" href="index.html#scenes">← Back to scenes</a>
+  </header>
+
+  <main class="viewer-main">
+    <section class="viewer-heading">
+      <span class="viewer-eyebrow">Explore the story in 3D</span>
+      <h1 id="pageTitle">Scene 01</h1>
+      <p id="pageSubtitle">Explore the scene from every angle.</p>
+    </section>
+    <div class="viewer-layout">
+      <section class="model-card" aria-label="3D model viewer">
+        <div class="model-stage">
+          <model-viewer id="sceneModel" camera-controls touch-action="pan-y" auto-rotate rotation-per-second="18deg" interaction-prompt="auto" shadow-intensity="1" exposure="1" loading="eager" alt="Interactive 3D scene model"></model-viewer>
+          <div class="model-message" id="modelMessage">
+            <div class="model-message-inner">
+              <h2 id="messageTitle">Scene model not connected yet</h2>
+              <p id="messageText">This viewer is ready. Once the scene model link is added, it will appear here for you to rotate and explore.</p>
+            </div>
+          </div>
+        </div>
+        <div class="viewer-controls">
+          <button class="viewer-control active" id="rotateButton" type="button">⟳ Auto rotate</button>
+          <button class="viewer-control" id="animationButton" type="button" hidden>▶ Play animation</button>
+          <button class="viewer-control" id="resetButton" type="button">↺ Reset view</button>
+          <button class="viewer-control" id="fullscreenButton" type="button">⛶ Fullscreen</button>
+        </div>
+      </section>
+      <aside class="scene-panel">
+        <span class="scene-number" id="sceneBadge">SCENE 01 / 12</span>
+        <h2 id="sceneTitle">Scene 1</h2>
+        <p id="sceneDescription">This scene's description will be added when the story scenes are finalized.</p>
+        <label for="languageSelect"><strong>Story language</strong></label>
+        <select class="viewer-language" id="languageSelect">
+          <option value="en">English</option>
+          <option value="ms">Bahasa Melayu</option>
+          <option value="kd">Kadazandusun</option>
+        </select>
+        <div class="viewer-tip">🖐 Drag to rotate · Scroll or pinch to zoom · Two fingers to pan</div>
+        <div class="scene-nav">
+          <a id="previousScene" href="#">← Previous</a>
+          <a class="next" id="nextScene" href="#">Next →</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script src="js/viewer.js"></script>
+</body>
+</html>
